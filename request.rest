@@ -1,0 +1,6 @@
+GET http://localhost:3001/api/translator/get
+
+POST http://localhost:3001/api/login
+
+
+# http://localhost:3001
