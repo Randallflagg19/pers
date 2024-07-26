@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login({
-  
   setIsLoggedIn,
   setAuthMessage,
-  setIsGuest
+  setIsGuest,
 }: {
-  
   setIsLoggedIn: (state: boolean) => any;
   setAuthMessage: (message: string) => void;
   setIsGuest: (state: boolean) => any;
 }) {
   const [login, setLogin] = useState("test");
   const [pass, setPass] = useState("test");
+  const navigate = useNavigate();
 
   return (
     <div className="auth-wrapper">
@@ -51,8 +51,10 @@ export default function Login({
               localStorage.setItem("TheToken", res.token);
 
               setAuthMessage("Добро пожаловать");
+              setIsLoggedIn(true);
+
               setTimeout(() => {
-                setIsLoggedIn(true);
+                navigate("/main");
               }, 500);
             })
 
@@ -69,10 +71,13 @@ export default function Login({
         className="login-button"
         onClick={() => {
           setIsGuest(true);
+          navigate("/guest")
+          setIsLoggedIn(false);
         }}
       >
         Войти как гость
       </button>
+      {/* <Link to={"/main"}>Go To Main</Link> */}
     </div>
   );
 }

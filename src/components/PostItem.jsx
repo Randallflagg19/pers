@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 
-import { Context } from "../App";
+import { UserContext } from "../App";
 
-const PostItem = ({  post, onDelete }) => {
+const PostItem = ({ post, onDelete }) => {
   const handleDelete = async () => {
     const confirmDelete = window.confirm(
       "Вы действительно хотите удалить это слово?"
@@ -34,30 +34,22 @@ const PostItem = ({  post, onDelete }) => {
     }
   };
 
-  const [isLoggedIn, setIsLoggedIn] = useContext(Context);
+  const {isLoggedIn} = useContext(UserContext);
 
   return (
     <>
-      {isLoggedIn ? (
-        <div className="post">
-          <div className="post__content">
-            <strong>
-              {post.word} - {post.translation}
-            </strong>
-          </div>
+      <div className="post">
+        <div className="post__content">
+          <strong>
+            {post.word} - {post.translation}
+          </strong>
+        </div>
+        {isLoggedIn && (
           <div className="post__btns">
             <button className="image-button" onClick={handleDelete}></button>
           </div>
-        </div>
-      ) : (
-        <div className="post">
-          <div className="post__content">
-            <strong>
-              {post.word} - {post.translation}
-            </strong>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };

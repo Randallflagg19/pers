@@ -1,16 +1,16 @@
 import React, { useContext, useState, useRef } from "react";
-import { Context } from "../App";
+import { UserContext } from "../App";
 
-const Inputs = ({ onAdd,
-}:{
+const Inputs = ({
+  onAdd,
+}: {
   onAdd: (word: string, translation: string) => void;
 }) => {
   const [word, setWord] = useState("");
   const [translation, setTranslation] = useState("");
   const wordInputRef = useRef<HTMLInputElement>(null);
 
-
-  const [isLoggedIn, setIsLoggedIn] = useContext(Context);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
 
   const handleAddClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ const Inputs = ({ onAdd,
 
   return (
     <div>
-      {isLoggedIn ? (
+      {isLoggedIn && (
         <div className="wrapper">
           <div className="input-wrapper">
             <input
@@ -62,8 +62,6 @@ const Inputs = ({ onAdd,
             </button>
           </div>
         </div>
-      ) : (
-        <div></div>
       )}
     </div>
   );

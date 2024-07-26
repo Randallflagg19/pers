@@ -25,6 +25,19 @@
   padding-left: 5px;
 }
 
+.search {
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+.search input {
+  border: 1px solid;
+  margin-left: 10px;
+  padding-left: 5px;
+  height: 20px;
+  border-radius: 3px;
+}
+
 button {
   display: block;
   padding: 5px;
@@ -100,8 +113,24 @@ h1 {
   margin-top: 12px;
 }
 
+.authLink {
+  font-size: 50px;
+  color: #cf1c61; 
+  text-decoration: none;
+  font-weight: bold; 
+  padding: 10px 20px; 
+  border: 2px solid #1bd60a; 
+  border-radius: 5px; 
+  transition: background-color 0.3s, color 0.3s; 
+}
+
+.authLink:hover {
+  background-color: #1b2fa0;
+  color: white; 
+}
 .exit-wrapper {
   display: flex;
+  justify-content: space-between;
   flex-direction: row-reverse;
 }
 
@@ -111,7 +140,7 @@ h1 {
   background-color: #d88b16;
   font: bold 0.8rem "Fira Sans", serif;
   margin: 2px 0px 0px 2px;
-  cursor:not-allowed;
+  cursor: not-allowed;
   user-select: none;
 }
 
