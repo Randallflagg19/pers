@@ -19,7 +19,7 @@ export function usePosts(setIsLoggedIn: (value: boolean) => void) {
 
     const fetchAllWords = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/translator/get");
+        const response = await fetch("http://91.210.170.148/api/translator/get");
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         const arrayOfWords = data.map((word: any) => ({
@@ -55,7 +55,7 @@ export function usePosts(setIsLoggedIn: (value: boolean) => void) {
   };
   
   const sendWords = async (en: string, ru: string) => {
-    const response = await fetch("http://localhost:3001/api/translator/write", {
+    const response = await fetch("http://91.210.170.148/api/translator/write", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

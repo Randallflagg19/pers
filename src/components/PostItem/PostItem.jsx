@@ -11,7 +11,7 @@ const PostItem = ({ post, onDelete }) => {
       const id = post.id;
       try {
         const response = await fetch(
-          `http://localhost:3001/api/translator/delete`,
+          `http://91.210.170.148/translator/delete`,
           {
             method: "DELETE",
             headers: {
