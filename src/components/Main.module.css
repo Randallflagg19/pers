@@ -1,0 +1,28 @@
+.mainHeader {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
+
+.search {
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+.search input {
+  border: 1px solid;
+  margin-left: 10px;
+  padding-left: 5px;
+  height: 20px;
+  border-radius: 3px;
+}
+
+.arrangeButton {
+  padding: 4px 12px;
+  border-radius: 10px;
+  background-color: #11be2e;
+  font: bold 0.8rem "Fira Sans", serif;
+  margin: 2px 0px 0px 2px;
+  cursor: not-allowed;
+  user-select: none;
+}

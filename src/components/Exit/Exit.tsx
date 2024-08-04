@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import { UserContext } from "../App";
+import { UserContext } from "../../App";
+import styles from "./Exit.module.css";
 
 const Exit = ({
   setAuthMessage,
@@ -19,7 +20,7 @@ const Exit = ({
     navigate("/");
   };
   return (
-    <button className="exit-button" onClick={handleExit}>
+    <button className={styles.exit} onClick={handleExit}>
       exit
     </button>
   );

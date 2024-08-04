@@ -1,5 +1,6 @@
 import React, { useContext, useState, useRef } from "react";
-import { UserContext } from "../App";
+import { UserContext } from "../../App";
+import styles from "./Inputs.module.css";
 
 const Inputs = ({
   onAdd,
@@ -33,11 +34,11 @@ const Inputs = ({
   return (
     <div>
       {isLoggedIn && (
-        <div className="wrapper">
-          <div className="input-wrapper">
+        <div className={styles.wrapper}>
+          <div className={styles.inputWrapper}>
             <input
               placeholder="word"
-              className="global-input word"
+              className={styles.globalInput}
               type="text"
               value={word}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -46,10 +47,10 @@ const Inputs = ({
               onKeyDown={handleEnterPress}
               ref={wordInputRef}
             />
-            <div className="some"></div>
+            <div className={styles.gap}></div>
             <input
               placeholder="перевод"
-              className="global-input translation"
+              className={styles.globalInput}
               type="text"
               value={translation}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -57,7 +58,7 @@ const Inputs = ({
               }
               onKeyDown={handleEnterPress}
             />
-            <button className="add" onClick={handleAddClick}>
+            <button className={styles.add} onClick={handleAddClick}>
               add
             </button>
           </div>

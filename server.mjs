@@ -105,7 +105,7 @@ app.put("/api/translator/write", validateUser, async (req, res) => {
 
 app.get("/api/translator/get", async (req, res) => {
   try {
-    const data = await pool.query(`select * from words1`);
+    const data = await pool.query(`SELECT * FROM words1 ORDER BY id DESC`);
     res.json(data.rows);
   } catch (error) {
     console.error(error);

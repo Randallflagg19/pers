@@ -1,0 +1,9 @@
+.exit{
+    padding: 4px 12px;
+    border-radius: 10px;
+    background-color: #d88b16;
+    font: bold 0.8rem "Fira Sans", serif;
+    margin: 2px 0px 0px 2px;
+    cursor: not-allowed;
+    user-select: none;
+  }

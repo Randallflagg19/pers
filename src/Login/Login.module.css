@@ -1,0 +1,38 @@
+.authWrapper {
+    margin: 30px;
+  }
+  
+  .authWrapper * {
+    margin: 10px 0px;
+  }
+  
+  .authWrapper input {
+    display: flex;
+    border: 1px solid;
+    padding-left: 15px;
+    width: 100%;
+    max-width: 340px;
+    height: 50px;
+    font-size: 25px;
+    background-color: rgb(209, 211, 226);
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 10px;
+  }
+  
+  .authWrapper button {
+    padding: 14px 30px;
+    border-radius: 10px;
+    background-image: linear-gradient(45deg, #34a834, #b2bd15);
+    font: bold italic 1.2rem "Fira Sans", serif;
+    cursor: pointer;
+    user-select: none;
+    margin: auto;
+    margin-top: 12px;
+  }
+
+  .loginButton {
+    display: block;
+    padding: 5px;
+    user-select: none;
+  }

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-
-import { UserContext } from "../App";
+import styles from "./PostItem.module.css";
+import { UserContext } from "../../App";
 
 const PostItem = ({ post, onDelete }) => {
   const handleDelete = async () => {
@@ -34,20 +34,19 @@ const PostItem = ({ post, onDelete }) => {
     }
   };
 
-  const {isLoggedIn} = useContext(UserContext);
+  const { isLoggedIn } = useContext(UserContext);
 
   return (
     <>
-      <div className="post">
-        <div className="post__content">
-          <strong>
-            {post.word} - {post.translation}
-          </strong>
-        </div>
+      <div className={styles.post}>
+        <strong>
+          {post.word} - {post.translation}
+        </strong>
         {isLoggedIn && (
-          <div className="post__btns">
-            <button className="image-button" onClick={handleDelete}></button>
-          </div>
+          <button
+            className={styles.imageButton}
+            onClick={handleDelete}
+          ></button>
         )}
       </div>
     </>
