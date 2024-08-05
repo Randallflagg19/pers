@@ -18,7 +18,6 @@ export default function Main() {
   if (!isLoggedIn && !isGuest) {
     return <LinkAuth />;
   }
-
   return (
     <div>
       <div className={styles.mainHeader}>

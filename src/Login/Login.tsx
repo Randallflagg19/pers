@@ -33,7 +33,7 @@ export default function Login() {
       />
       <button className={styles.loginButton}
         onClick={() => {
-          fetch("http://localhost:3001/api/login", {
+          fetch("http://91.210.170.148/api/login", {
             headers: { "Content-Type": "application/json" },
             method: "POST",
             body: JSON.stringify({ username: login, password: pass }),
