@@ -19,6 +19,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.get("/api/check", async (req, res) => {
+  res.send("OK server working, you're goood");
+});
+
 app.post("/api/registation", async (req, res) => {
   const { username, password } = req.body;
   try {
