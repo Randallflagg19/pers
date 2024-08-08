@@ -11,6 +11,26 @@ export default function Login() {
   const navigate = useNavigate();
   const { authMessage, setAuthMessage } = useContext(AuthMessageContext);
 
+  const handleLogin = () => {
+    fetch("http://91.210.170.148/api/login", {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ username: login, password: pass }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        localStorage.setItem("TheToken", res.token);
+        setAuthMessage("Добро пожаловать");
+        setIsLoggedIn(true);
+        setTimeout(() => navigate("/main"), 500);
+      })
+      .then(() => setAuthMessage("Требуется авторизация"))
+      .catch(() => {
+        setIsLoggedIn(false);
+        setAuthMessage("Неправильный логин или пароль");
+      });
+  };
+
   const handleGuestLogin = () => {
     localStorage.setItem("isGuest", "true");
     setIsGuest(true);
@@ -48,28 +68,7 @@ export default function Login() {
         onChange={(e) => setPass(e.target.value)}
         value={pass}
       />
-      <button
-        className={styles.loginButton}
-        onClick={() => {
-          fetch("http://91.210.170.148/api/login", {
-            headers: { "Content-Type": "application/json" },
-            method: "POST",
-            body: JSON.stringify({ username: login, password: pass }),
-          })
-            .then((res) => res.json())
-            .then((res) => {
-              localStorage.setItem("TheToken", res.token);
-              setAuthMessage("Добро пожаловать");
-              setIsLoggedIn(true);
-              setTimeout(() => navigate("/main"), 500);
-            })
-            .then(() => setAuthMessage("Добро пожаловать"))
-            .catch(() => {
-              setIsLoggedIn(false);
-              setAuthMessage("Неправильный логин или пароль");
-            });
-        }}
-      >
+      <button className={styles.loginButton} onClick={handleLogin}>
         Login
       </button>
       <button className={styles.loginButton} onClick={handleGuestLogin}>

@@ -10,7 +10,7 @@ import { usePosts } from "./usePosts";
 import styles from './Main.module.css';
 
 export default function Main() {
-  const { setAuthMessage } = useContext(AuthMessageContext);
+  // const { setAuthMessage } = useContext(AuthMessageContext);
   const { isLoggedIn, setIsLoggedIn, isGuest, setIsGuest } = useContext(UserContext);
 
   const { posts, handleDeletePost, handleSearchChange, addNewPost, arrange } = usePosts(setIsLoggedIn);
@@ -21,7 +21,9 @@ export default function Main() {
   return (
     <div>
       <div className={styles.mainHeader}>
-        <Exit setAuthMessage={setAuthMessage} />
+        <Exit
+        //  setAuthMessage={setAuthMessage} 
+         />
         <MatchButton posts={posts} />
         <ArrangeButton arrange={arrange} />
         <form className={styles.search}>
