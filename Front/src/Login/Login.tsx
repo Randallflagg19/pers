@@ -20,11 +20,11 @@ export default function Login() {
       .then((res) => res.json())
       .then((res) => {
         localStorage.setItem("TheToken", res.token);
-        setAuthMessage("Добро пожаловать");
+        setAuthMessage("Требуется авторизация");
         setIsLoggedIn(true);
         setTimeout(() => navigate("/main"), 500);
       })
-      .then(() => setAuthMessage("Требуется авторизация"))
+      .then(() => setAuthMessage("Добро пожаловать"))
       .catch(() => {
         setIsLoggedIn(false);
         setAuthMessage("Неправильный логин или пароль");
