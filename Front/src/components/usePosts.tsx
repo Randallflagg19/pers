@@ -89,4 +89,4 @@ export function usePosts(setIsLoggedIn: (value: boolean) => void) {
   };
 }
 
-// const response = await fetch("http://91.210.170.148/api/translator/get");
+

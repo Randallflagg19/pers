@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import { AuthMessageContext } from "../App";
-import styles from './Login.module.css'
+import styles from "./Login.module.css";
 
 export default function Login() {
   const { setIsLoggedIn, setIsGuest } = useContext(UserContext);
@@ -18,6 +18,23 @@ export default function Login() {
     navigate("/main");
   };
 
+  const handleRegistration = () => {
+    {
+      fetch("http://91.210.170.148/api/registation", {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ username: login, password: pass }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setAuthMessage("Вы зарегистрированы");
+        })
+        .catch(() => {
+          setIsLoggedIn(false);
+          setAuthMessage("Пользователь уже зарегистрирован");
+        });
+    }
+  };
   return (
     <div className={styles.authWrapper}>
       <h1>{authMessage}</h1>
@@ -31,7 +48,8 @@ export default function Login() {
         onChange={(e) => setPass(e.target.value)}
         value={pass}
       />
-      <button className={styles.loginButton}
+      <button
+        className={styles.loginButton}
         onClick={() => {
           fetch("http://91.210.170.148/api/login", {
             headers: { "Content-Type": "application/json" },
@@ -54,7 +72,12 @@ export default function Login() {
       >
         Login
       </button>
-      <button className={styles.loginButton} onClick={handleGuestLogin}>Войти как гость</button>
+      <button className={styles.loginButton} onClick={handleGuestLogin}>
+        Войти как гость
+      </button>
+      <button className={styles.loginButton} onClick={handleRegistration}>
+        Зарегистрироваться
+      </button>
     </div>
   );
 }

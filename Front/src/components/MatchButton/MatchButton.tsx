@@ -18,7 +18,7 @@ export default function MatchButton({ posts }: any) {
         seen[post.word] = true;
       }
     });
-
+    console.log("Match!");
     console.log(duplicatedPosts);
   };
   return (
