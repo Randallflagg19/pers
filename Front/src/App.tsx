@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Notfoundpage from "./components/NotFoundPage/Notfoundpage";
-import Login from "./Login/Login";
+import Login from "./components/Login/Login";
 import Main from "./components/Main";
 import "./App.css";
 
