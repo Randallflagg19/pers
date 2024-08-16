@@ -10,22 +10,33 @@ export function usePosts(setIsLoggedIn: (value: boolean) => void) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [searchValue, setSearchValue] = useState("");
 
-  useEffect(() => {
-    const fetchWords = async () => {
-      try {
-        if (localStorage.getItem("TheToken")) {
-          setIsLoggedIn(true);
-        }
-        const words = await api.fetchAllWords();
-        setPosts(words);
-      } catch (error) {
-        console.error("Failed to fetch words:", error);
+  const fetchWords = async () => {
+    try {
+      if (localStorage.getItem("TheToken")) {
+        setIsLoggedIn(true);
       }
-    };
+      const words = await api.fetchAllWords();
+      setPosts(words);
+    } catch (error) {
+      console.error("Failed to fetch words:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchWords();
   }, [setIsLoggedIn]);
 
-  
+  // useEffect(() => {
+  //   // Создаем таймер внутри useEffect
+  //   const timer = setInterval(() => {
+  //     console.log("some");
+  //   }, 1000);
+
+  //   // Возвращаем функцию очистки, которая вызовет clearInterval
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
 
   const handleDeletePost = (id: number) => {
     setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));

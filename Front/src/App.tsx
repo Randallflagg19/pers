@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Notfoundpage from "./components/NotFoundPage/Notfoundpage";
 import Login from "./components/Login/Login";
+import MemoExample from "./components/MemoExample/MemoExample";
 import Main from "./components/Main";
 import "./App.css";
 
@@ -21,11 +22,11 @@ export const AuthMessageContext = React.createContext<
     }
   | any
 >(null);
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isGuest, setIsGuest] = useState(false);
   const [authMessage, setAuthMessage] = useState("Требуется авторизация");
+  const navigate = useNavigate();
 
   return (
     <UserContext.Provider
@@ -41,7 +42,9 @@ function App() {
           <Route path="" element={<Login />} />
           <Route path="/main" element={<Main />} />
           <Route path="*" element={<Notfoundpage />} />
+          <Route path="/memo" element={<MemoExample />} />
         </Routes>
+        <a onClick={() => navigate("/memo")}>memo</a>
       </AuthMessageContext.Provider>
     </UserContext.Provider>
   );
