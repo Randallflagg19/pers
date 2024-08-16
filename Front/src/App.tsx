@@ -293,8 +293,10 @@ function App() {
         <button
           onClick={() => {
             words.forEach((i) => {
-              api.sendWords(i.en, i.ru);
-            });
+              setTimeout(() => {
+                api.sendWords(i.en, i.ru);
+              })
+            }, 1000);
           }}
         >
           add posts
