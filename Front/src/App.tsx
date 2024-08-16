@@ -5,6 +5,7 @@ import Login from "./components/Login/Login";
 import MemoExample from "./components/MemoExample/MemoExample";
 import Main from "./components/Main";
 import "./App.css";
+import api from "./api/API";
 
 let words = [
   { en: "woozy", ru: "одурманенный" },
@@ -289,6 +290,15 @@ function App() {
           setAuthMessage,
         }}
       >
+        <button
+          onClick={() => {
+            words.forEach((i) => {
+              api.sendWords(i.en, i.ru);
+            });
+          }}
+        >
+          add posts
+        </button>
         <Routes>
           <Route path="" element={<Login />} />
           <Route path="/main" element={<Main />} />
