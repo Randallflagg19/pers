@@ -5,16 +5,27 @@
 }
 
 .search {
-  font-size: 20px;
+  font-size: 18px;
   padding-left: 5px;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
 }
 
 .search input {
-  border: 1px solid;
+  border: 2px solid #9ebbb8;
+  padding: 8px 15px;
   margin-left: 10px;
-  padding-left: 5px;
-  height: 20px;
-  border-radius: 3px;
+  font-size: 16px;
+  border-radius: 15px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search input:focus {
+  border-color: #5239be;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .arrangeButton {
@@ -24,5 +35,88 @@
   font: bold 0.8rem "Fira Sans", serif;
   margin: 2px 0px 0px 2px;
   cursor: not-allowed;
+  user-select: none;
+}
+
+.selectedPage {
+  font-weight: bold;
+}
+
+/* Основные стили для контейнера пагинации */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Стили для всех кнопок пагинации */
+.pagination button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Кнопка при наведении */
+.pagination button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+/* Стили для активной кнопки текущей страницы */
+.selectedPage {
+  background-color: #1e90ff;
+  color: white;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Кнопки Prev и Next */
+.pagination .prev,
+.pagination .next {
+  background-color: #008cba;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+}
+
+.pagination .prev:hover,
+.pagination .next:hover {
+  background-color: #007b9e;
+}
+
+/* Добавляем анимацию на кнопки страниц */
+.pageButton {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.pageButton:hover {
+  background-color: #add8e6;
+  transform: translateY(-2px);
+}
+
+.btn,
+.exit {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: #4caf50; /* Зеленый цвет */
+  color: white;
+  font: bold 0.9rem "Fira Sans", sans-serif;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   user-select: none;
 }

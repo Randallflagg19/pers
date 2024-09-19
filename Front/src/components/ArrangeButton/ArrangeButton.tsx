@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './ArrangeButton.module.css';
+import React from "react";
+import styles from "./ArrangeButton.module.css";
 
 interface ArrangeButtonProps {
   arrange: () => void;
@@ -7,12 +7,10 @@ interface ArrangeButtonProps {
 
 const ArrangeButton: React.FC<ArrangeButtonProps> = ({ arrange }) => {
   return (
-    <button className={styles.btn} onClick={arrange}>
-     аrrange
+    <button className={styles.arrange} onClick={arrange}>
+      аrrange
     </button>
   );
 };
-
-
 
 export default ArrangeButton;

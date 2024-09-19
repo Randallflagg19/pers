@@ -1,9 +1,21 @@
-.exit{
-    padding: 4px 12px;
-    border-radius: 10px;
-    background-color: #d88b16;
-    font: bold 0.8rem "Fira Sans", serif;
-    margin: 2px 0px 0px 2px;
-    cursor: not-allowed;
-    user-select: none;
-  }
+.exit {
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: white;
+  font: bold 0.9rem "Fira Sans", sans-serif;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  user-select: none;
+  background-color: #ad1c1c;
+  cursor: pointer;
+}
+
+.exit:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  background-color: #cf4411;
+}

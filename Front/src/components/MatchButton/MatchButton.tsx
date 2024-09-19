@@ -22,7 +22,7 @@ export default function MatchButton({ posts }: any) {
     console.log(duplicatedPosts);
   };
   return (
-    <button className={styles.btn} onClick={match}>
+    <button className={styles.match} onClick={match}>
       match
     </button>
   );
