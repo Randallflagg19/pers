@@ -56,6 +56,25 @@ export function usePosts(setIsLoggedIn: (value: boolean) => void) {
 		})
 	}
 
+	const filterMatch = () => {
+		const wordCount: { [key: string]: number } = {}
+		const duplicates: Post[] = []
+
+		posts.forEach((post) => {
+			const lowerCaseWord = post.word.toLowerCase()
+			wordCount[lowerCaseWord] = (wordCount[lowerCaseWord] || 0) + 1
+		})
+
+		posts.forEach((post) => {
+			const lowerCaseWord = post.word.toLowerCase()
+			if (wordCount[lowerCaseWord] > 1) {
+				duplicates.push(post)
+			}
+		})
+
+		setPosts(duplicates)
+	}
+
 	return {
 		posts: posts.filter((post) =>
 			post.word.toLowerCase().includes(searchValue)
@@ -64,6 +83,7 @@ export function usePosts(setIsLoggedIn: (value: boolean) => void) {
 		handleSearchChange,
 		addNewPost,
 		arrange,
+		filterMatch,
 		searchValue
 	}
 }
