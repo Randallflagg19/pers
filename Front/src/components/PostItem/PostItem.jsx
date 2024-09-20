@@ -10,7 +10,7 @@ const PostItem = ({ post, onDelete }) => {
     if (confirmDelete) {
       const id = post.id;
       try {
-        await api.delete(id) 
+        await api.delete(id);
         console.log(`Word with id ${id} has been deleted.`);
         onDelete(id);
       } catch (error) {

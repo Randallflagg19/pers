@@ -91,6 +91,7 @@ const validateUser = async (req, res, next) => {
 
             req.username = decoded.username
             req.user_id = decoded.user_id
+            console.log(req.user_id)
             next()
         })
     }
@@ -107,7 +108,7 @@ app.put('/api/translator/write', validateUser, async (req, res) => {
             [body.en, body.ru, req.user_id]
         )
 
-
+        console.log([body.en, body.ru, req.user_id])
         const newWordId = result.rows[0].id
         res.send({id: newWordId, en: body.en, ru: body.ru})
     } catch (error) {
@@ -118,12 +119,12 @@ app.put('/api/translator/write', validateUser, async (req, res) => {
 
 app.get('/api/translator/get', validateUser, async (req, res) => {
     try {
-        // select * from words1 where userId = $1 ORDER BY id DESC (где доллар один - айдишник
-        // пользователя который делает запрос)
-
-        const data = await pool.query(`SELECT * FROM words1 where user_id = $1  ORDER BY id DESC`,
-            [req.user_id])
+        // Получаем только слова, которые принадлежат пользователю
+        const data = await pool.query(`SELECT * FROM words1 WHERE
+        user_id = $1 ORDER BY id DESC`, [req.user_id])
         res.json(data.rows)
+        console.log([req.user_id])
+
     } catch (error) {
         console.error(error)
         res.status(500).json({error: 'Internal Server Error'})
