@@ -3,10 +3,9 @@ import express from 'express'
 import cors from 'cors'
 import pg from 'pg'
 
-
 /// таблица wodrd1, ( kolonki = ru, en, id ), nado chtobi bilo
 // ru, en, id, user_id
-const PORT = 3001
+const PORT = 3002
 const {Pool} = pg
 
 const pool = new Pool({
@@ -21,6 +20,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+
 
 app.get('/api/check', async (req, res) => {
     res.send('OK server working, you\'re goood')
