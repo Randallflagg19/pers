@@ -52,6 +52,33 @@ class API {
 			return []
 		}
 	}
+	fetchGuestWords = async () => {
+		try {
+			const response = await fetch(`${this.url}/translator/guest/get`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`)
+			}
+
+			const data = await response.json()
+
+			const arrayOfWords = data.map((word: any) => ({
+				id: word.id,
+				word: word.en,
+				translation: word.ru
+			}))
+			return arrayOfWords
+		}
+		catch (error) {
+			console.error('Failed to fetch words:', error)
+			return []
+		}
+	}
 	sendWords = async (en: string, ru: string) => {
 		const response = await fetch(`${this.url}/translator/write`, {
 			method: 'PUT',
@@ -100,8 +127,8 @@ class API {
 	}
 }
 
-// let api = new API('http://localhost:3001/api')
+let api = new API('http://localhost:3001/api')
 
-let api = new API('http://91.210.170.148/api')
+// let api = new API('http://91.210.170.148/api')
 
 export default api

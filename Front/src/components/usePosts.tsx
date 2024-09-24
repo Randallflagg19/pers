@@ -15,9 +15,14 @@ export function usePosts(setIsLoggedIn: (value: boolean) => void) {
 		try {
 			if (localStorage.getItem('TheToken')) {
 				setIsLoggedIn(true)
+				const words = await api.fetchAllWords()
+				setPosts(words)
 			}
-			const words = await api.fetchAllWords()
-			setPosts(words)
+			else {
+				const words = await api.fetchGuestWords()
+				setPosts(words)
+			}
+
 		}
 		catch (error) {
 			console.error('Failed to fetch words:', error)

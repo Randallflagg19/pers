@@ -72,11 +72,19 @@ export default function Main() {
 			)
 		})
 
+	const resetPagination = () => {
+		setCurrentPage(1)
+		setPortionNumber(1)
+	}
+	const handleFilterMatch = () => {
+		filterMatch()
+		resetPagination() // Сброс пагинации после поиска дубликатов
+	}
 	return (
 		<div>
 			<div className={styles.mainHeader}>
 				<Exit/>
-				<MatchButton posts={posts} filterMatch={filterMatch}/>
+				<MatchButton posts={posts} filterMatch={handleFilterMatch}/>
 				<ArrangeButton arrange={arrange}/>
 				<form className={styles.search}>
 					Search:
