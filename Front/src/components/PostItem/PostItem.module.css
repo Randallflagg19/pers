@@ -1,0 +1,47 @@
+.imageButton {
+  background-color: rgb(221, 7, 7); /* Красный цвет фона */
+  margin-right: 15px;
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgb(15, 1, 1); /* Черная обводка */
+  border-radius: 50%; /* Закругляем края для создания круга */
+  position: relative; /* Для позиционирования крестика внутри */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Легкая тень для объема */
+  transition: background-color 0.3s ease;
+}
+
+/* Делаем крестик */
+.imageButton::before,
+.imageButton::after {
+  content: "";
+  position: absolute;
+  width: 60%;
+  height: 2px;
+  background-color: rgb(2, 2, 2); /* Белый цвет крестика */
+}
+
+.imageButton::before {
+  transform: rotate(45deg); /* Одна линия крестика */
+}
+
+.imageButton::after {
+  transform: rotate(-45deg); /* Вторая линия крестика */
+}
+
+/* Эффект при наведении */
+.imageButton:hover {
+  background-color: rgb(200, 0, 0); /* Более темный оттенок красного */
+}
+
+.post {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 30px;
+  padding-left: 5px;
+}
