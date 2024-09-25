@@ -2,9 +2,43 @@ import jwt from 'jsonwebtoken'
 import express from 'express'
 import cors from 'cors'
 import pg from 'pg'
+/////////////////////////////////////
 
-/// таблица wodrd1, ( kolonki = ru, en, id ), nado chtobi bilo
-// ru, en, id, user_id
+//multer почитать
+//
+//
+import multer from 'multer'
+import fs from 'fs'
+import {fileURLToPath} from 'url'
+import path from 'path'
+//
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const imageDirectory = path.join(__dirname, 'uploads')
+//
+if (!fs.existsSync(imageDirectory)) {
+    fs.mkdirSync(imageDirectory, {recursive: true})
+}
+
+// обработка/сохранение файлов (мидлвейр)
+
+// создаем стор
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, imageDirectory)
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now() + '-' + Math.round(Math.random() * 159)}.jpg`)
+    }
+})
+
+//это что?
+const upload = multer({storage})
+
+//////////////////////////////////////////////
+
 const PORT = 3002
 const {Pool} = pg
 
@@ -21,6 +55,51 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+
+///////////////////////
+
+// 1 фото
+
+app.get('/api/uploads/:filename', async (req, res) => {
+    const imageName = req.params.filename
+    const imagePath = path.join(imageDirectory, imageName)
+
+    res.sendFile(imagePath, err => {
+        if (err) {
+            res.status(404).send('image not found')
+        }
+    })
+})
+
+// загрузить на сервер
+
+app.post('/api/upload', upload.single('image'), async (req, res) => {
+    const file = req.file
+
+    if (!file) {
+        return res.status(400).send('No file uploads')
+    }
+
+    res.json({
+        message: 'File success upload',
+        filename: file.filename,
+        path: `/api/uploads/${file.filename}`
+    })
+})
+
+//получить все
+
+
+app.get('/api/getImages', async (req, res) => {
+    const filesArr = fs.readdirSync(imageDirectory, {withFileTypes: true})
+    const fileNames = filesArr.map(file => {
+        return `/api/uploads/${file.name}`
+    })
+
+    return res.json(fileNames)
+})
+
+///////////////////////////////////////////////////
 
 app.get('/api/check', async (req, res) => {
     res.send('OK server working, you\'re goood')
@@ -125,6 +204,18 @@ app.get('/api/translator/get', validateUser, async (req, res) => {
         res.json(data.rows)
         console.log([req.user_id])
 
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({error: 'Internal Server Error'})
+    }
+})
+
+app.get('/api/translator/guest/get', async (req, res) => {
+    try {
+        // Получаем все слова
+        const data = await pool.query(`SELECT * FROM words1 ORDER BY id DESC`
+        )
+        res.json(data.rows)
     } catch (error) {
         console.error(error)
         res.status(500).json({error: 'Internal Server Error'})
