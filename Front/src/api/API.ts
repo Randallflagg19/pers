@@ -127,8 +127,8 @@ class API {
 	}
 }
 
-let api = new API('http://localhost:3001/api')
+// let api = new API('http://localhost:3001/api')
 
-// let api = new API('http://91.210.170.148/api')
+let api = new API('http://91.210.170.148/api')
 
 export default api
