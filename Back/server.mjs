@@ -39,7 +39,7 @@ const upload = multer({storage})
 
 //////////////////////////////////////////////
 
-const PORT = 3002
+const PORT = 3001
 const {Pool} = pg
 
 const pool = new Pool({
@@ -231,6 +231,12 @@ app.delete('/api/translator/delete', validateUser, async (req, res) => {
         console.error(error)
         res.status(500).json({error: 'Internal Server Error'})
     }
+})
+
+app.get('/api/test', (req, res) => {
+    console.log('test was success')
+    res.status(200).json({message: 'ok'})
+
 })
 
 app.listen(PORT, () => {
