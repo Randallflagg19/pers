@@ -1,71 +1,68 @@
-import React, { useContext, useState, useRef } from "react";
-import { UserContext } from "../../App";
-import styles from "./Inputs.module.css";
+import React, {useContext, useRef} from 'react'
+import {UserContext} from '../../Translator'
+import {Formik, Form, Field, ErrorMessage} from 'formik'
+import * as Yup from 'yup'
+import styles from './Inputs.module.css'
 
 const Inputs = ({
-  onAdd,
+	onAdd
 }: {
-  onAdd: (word: string, translation: string) => void;
+	onAdd: (word: string, translation: string) => void;
 }) => {
-  const [word, setWord] = useState("");
-  const [translation, setTranslation] = useState("");
-  const wordInputRef = useRef<HTMLInputElement>(null);
+	const wordInputRef = useRef<HTMLInputElement>(null)
+	const {isLoggedIn} = useContext(UserContext)
 
-  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+	const initialValues = {word: '', translation: ''}
 
-  const handleAddClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (word && translation) {
-      await onAdd(word, translation);
-      setWord("");
-      setTranslation("");
-      wordInputRef.current?.focus();
-    } else {
-      console.log("Input is empty");
-    }
-  };
+	const validationSchema = Yup.object({
+		word: Yup.string().required('Обязательное поле'),
+		translation: Yup.string().required('Обязательное поле')
+	})
 
-  const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleAddClick(e as unknown as React.MouseEvent<HTMLButtonElement>);
-    }
-  };
+	const handleSubmit = (values: { word: string; translation: string },
+		{resetForm}: { resetForm: () => void }) => {
+		onAdd(values.word, values.translation)
+		resetForm()
+		wordInputRef.current?.focus()
+	}
 
-  return (
-    <div>
-      {isLoggedIn && (
-        <div className={styles.wrapper}>
-          <div className={styles.inputWrapper}>
-            <input
-              placeholder="word"
-              className={styles.globalInput}
-              type="text"
-              value={word}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setWord(e.target.value)
-              }
-              onKeyDown={handleEnterPress}
-              ref={wordInputRef}
-            />
-            <div className={styles.gap}></div>
-            <input
-              placeholder="перевод"
-              className={styles.globalInput}
-              type="text"
-              value={translation}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setTranslation(e.target.value)
-              }
-              onKeyDown={handleEnterPress}
-            />
-            <button className={styles.add} onClick={handleAddClick}>
-              add
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
+	return (
+		<div>
+			{isLoggedIn && (
+				<Formik
+					initialValues={initialValues}
+					validationSchema={validationSchema}
+					onSubmit={handleSubmit}
+				>
+					{() => (
+						<Form className={styles.wrapper}>
+							<div className={styles.inputWrapper}>
+								<Field
+									name="word"
+									placeholder="word"
+									className={styles.globalInput}
+									innerRef={wordInputRef}
+									autoComplete="off"
+								/>
+								<ErrorMessage name="word" component="div" className={styles.error}/>
+								<div className={styles.gap}></div>
+								<Field
+									name="translation"
+									placeholder="перевод"
+									className={styles.globalInput}
+									autoComplete="off"
+								/>
+								<ErrorMessage name="translation" component="div" className={styles.error}/>
+								<button className={styles.add} type="submit">
+									add
+								</button>
+							</div>
+						</Form>
+					)}
+				</Formik>
+			)}
+		</div>
+	)
+}
 
-export default Inputs;
+export default Inputs

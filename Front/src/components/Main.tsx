@@ -1,125 +1,76 @@
-import React, {useContext, useMemo, useState} from 'react'
-import Exit from './Exit/Exit'
+import React, {useContext, useMemo, useState, useCallback} from 'react'
 import PostItem from './PostItem/PostItem'
-import LinkAuth from './LinkAuth/LinkAuth'
 import Inputs from './Inputs/Inputs'
-import MatchButton from './MatchButton/MatchButton'
-import ArrangeButton from './ArrangeButton/ArrangeButton'
-import {UserContext} from '../App'
+import Pagination from './Paginator/Pagination'
+import {UserContext} from '../Translator'
 import {usePosts} from './usePosts'
 import styles from './Main.module.css'
+import {Link, useNavigate} from 'react-router-dom'
 
-export default function Main() {
-	const {isLoggedIn, setIsLoggedIn, isGuest} = useContext(UserContext)
-
-	const {posts, handleDeletePost, filterMatch, handleSearchChange, addNewPost, arrange} =
-		usePosts(setIsLoggedIn)
+const Main = () => {
+	const {isLoggedIn, setIsGuest, setIsLoggedIn, isGuest} = useContext(UserContext)
+	const {posts, handleDeletePost, filterMatch, handleSearchChange, addNewPost, arrange} = usePosts(setIsLoggedIn)
+	const navigate = useNavigate()
 
 	const [currentPage, setCurrentPage] = useState(1)
 
 	const wordsOnPage = 20
-	const pagesPortionSize = 10
-	const totalWordsCount = posts.length
-	//всего страниц и всего порций страниц
-
-	let [portionNumber, setPortionNumber] = useState(1)
-
-	let pagesCount = Math.ceil(totalWordsCount / wordsOnPage)
-
-	//количество порций страниц это количество страниц/размер порции 5
-	let portionCount = Math.ceil(pagesCount / pagesPortionSize)
-	//   let pagesPortionSizeCount = Math.ceil(pagesCount / pagesPortionSize);
-
-	//порция начинается с:
-	//номера порции минус один помноженного на коли-во в порции страниц. +1
-	//заканчивается номером порции помноженного на кол-во страниц
-	let leftPortionPageNumber = (portionNumber - 1) * pagesPortionSize + 1
-	let rightPortionPageNumber = portionNumber * pagesPortionSize
-
-	let portion = wordsOnPage * (currentPage - 1)
-	let postsPortion = posts.slice(portion, portion + wordsOnPage)
+	const postsPortion = useMemo(() => {
+		return posts.slice((currentPage - 1) * wordsOnPage, currentPage * wordsOnPage)
+	}, [posts, currentPage])
 
 	const postsList = useMemo(() => {
-		return postsPortion.map((post: any) => (
+		return postsPortion.map(post => (
 			<PostItem post={post} key={post.id} onDelete={handleDeletePost}/>
 		))
-	}, [posts])
+	}, [postsPortion, handleDeletePost])
 
-	let pages = []
+	const handleExit = useCallback(() => {
+		localStorage.removeItem('TheToken')
+		setIsLoggedIn(false)
+		setIsGuest(false)
+		localStorage.setItem('isGuest', 'false')
+		navigate('/')
+	}, [setIsLoggedIn, setIsGuest, navigate])
 
-	for (let i = 1; i <= pagesCount; i++) {
-		pages.push(i)
-	}
-	if (!isLoggedIn && !isGuest) {
-		return <LinkAuth/>
-	}
-
-	let pagesItems = pages
-		.filter(
-			(page) => page >= leftPortionPageNumber && page <= rightPortionPageNumber
-		)
-		.map((page) => {
-			return (
-				<button
-					onClick={() => {
-						setCurrentPage(page)
-					}}
-					key={page}
-					className={currentPage === page ? styles.selectedPage : undefined}
-				>
-					{page}{' '}
-				</button>
-			)
-		})
-
-	const resetPagination = () => {
-		setCurrentPage(1)
-		setPortionNumber(1)
-	}
-	const handleFilterMatch = () => {
+	const handleFilterMatch = useCallback(() => {
 		filterMatch()
-		resetPagination() // Сброс пагинации после поиска дубликатов
+		setCurrentPage(1)
+	}, [filterMatch])
+
+	if (!isLoggedIn && !isGuest) {
+		return <Link className={styles.authLink} to={'/'}>
+			Авторизация
+		</Link>
 	}
+
 	return (
 		<div>
-			<div className={styles.mainHeader}>
-				<Exit/>
-				<MatchButton posts={posts} filterMatch={handleFilterMatch}/>
-				<ArrangeButton arrange={arrange}/>
+			<header className={styles.mainHeader}>
+				<button className={styles.exit} onClick={handleExit}>Exit</button>
+				<button className={styles.match} onClick={filterMatch}>
+					dupl
+				</button>
+				<button className={styles.arrange} onClick={arrange}>
+					sort
+				</button>
 				<form className={styles.search}>
-					Search:
-					<input onChange={handleSearchChange} type="search"/>
+					<label>
+						Search:
+						<input type="search" onChange={handleSearchChange}/>
+					</label>
 				</form>
-			</div>
+			</header>
 			<Inputs onAdd={addNewPost}/>
-
-			<span className={styles.pagination}>
-        {portionNumber > 1 && (
-	        <button
-		        className={styles.prev}
-		        onClick={() => {
-			        setPortionNumber(portionNumber - 1)
-		        }}
-	        >
-		        Prev
-	        </button>
-        )}
-
-				{pagesItems}
-
-				{portionCount > portionNumber && (
-					<button
-						className={styles.next}
-						onClick={() => {
-							setPortionNumber(portionNumber + 1)
-						}}
-					>
-						Next
-					</button>
-				)}
-      </span>
-
-			{postsList}
+			<Pagination
+				currentPage={currentPage}
+				setCurrentPage={setCurrentPage}
+				postsCount={posts.length}
+				wordsOnPage={wordsOnPage}
+			/>
+			<div>{postsList}</div>
 		</div>
 	)
 }
+
+export default Main

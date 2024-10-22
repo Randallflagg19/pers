@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import styles from './PostItem.module.css'
-import {UserContext} from '../../App'
+import {UserContext} from '../../Translator'
 import api from '../../api/API'
 
 const PostItem = ({post, onDelete}) => {
